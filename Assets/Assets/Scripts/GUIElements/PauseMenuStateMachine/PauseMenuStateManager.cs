@@ -18,13 +18,6 @@ public class PauseMenuStateManager : MonoBehaviour {
         PauseGame();
     }
 
-    void OnPostRender () {
-	    if(_currentStats != null)
-        {
-            _currentStats.OnPostRender();
-        }
-	}
-
     void LateUpdate()
     {
         if(_currentStats != null)

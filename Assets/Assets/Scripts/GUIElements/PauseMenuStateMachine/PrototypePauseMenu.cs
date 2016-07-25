@@ -3,8 +3,11 @@ using System.Collections;
 
 public class PrototypePauseMenu : PauseMenuStateManager {
 
+    public string gameManagerTag = "GAME_MANAGER";
+    public string mainCameraTag = "MainCamera";
+
     public int[] MainPageSize = { 200, 200 };
-    public string[] MainPageButtonTexts = { "Continue", "Options", "Credits" };
+    public string[] MainPageButtonTexts = { "Continue", "Options", "Credits", "Reset"};
 
     public int[] OptionsPageSize = { 300, 300 };
     public string[] toolbarString = { "Audio", "Graphics", "Stats", "System" };
@@ -65,12 +68,12 @@ public class PrototypePauseMenu : PauseMenuStateManager {
     void Awake()
     {
         addState(PauseMenuStateNames.StateNames[0], 
-            new PauseMenuMain(this, 
-            MainPageButtonTexts[0], MainPageButtonTexts[1], MainPageButtonTexts[2],
+            new PauseMenuMain(this, gameManagerTag,
+            MainPageButtonTexts[0], MainPageButtonTexts[1], MainPageButtonTexts[2], MainPageButtonTexts[3],
             MainPageSize[0], MainPageSize[1]) );
 
         addState(PauseMenuStateNames.StateNames[1],
-            new PauseMenuOptions(this, graphMaterial, gldepth, StatsSize[0], StatsSize[1], StatsSize[2], StatsSize[3],
+            new PauseMenuOptions(this, graphMaterial, mainCameraTag, gldepth, StatsSize[0], StatsSize[1], StatsSize[2], StatsSize[3],
             lowFPS, highFPS, lowFPSColor, highFPSColor, FPSLabelFormat, trianglesText, vertexText, OptionsPageSize[0], 
             OptionsPageSize[1], toolbarString, volumeLabel, qualities, qualityButtonsText, statsText, deviceText)
             );

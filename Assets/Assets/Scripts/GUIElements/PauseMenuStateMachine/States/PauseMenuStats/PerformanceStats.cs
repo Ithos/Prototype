@@ -8,7 +8,7 @@ public class PerformanceStats : PauseMenuStats {
     public bool showVerts = false;
     public bool showFPSGraph = false;
 
-    private float[] _FPSArray = null;
+    
     private float _FPS = 0;
 
     private float[] _size = { 100, 10, 100, 200 };
@@ -26,21 +26,20 @@ public class PerformanceStats : PauseMenuStats {
     private long _tris = 0;
     private long _verts = 0;
 
-    private Material _graphMaterial = null;
-    private float _gldepth = 0.5f;
+    
+    
+
+    private GameObject _mainCamera = null;
+    private FPSGraphic _graphic = null;
 
     public PerformanceStats()
     {
-        _FPSArray = new float[Screen.width];
     }
 
-    public PerformanceStats(Material graphMaterial, float gldepth, float xMargin, float y, float width, float heigth, 
+    public PerformanceStats(Material graphMaterial, string mainCameraTag, float gldepth, float xMargin, float y, float width, float heigth, 
         int lowFPS, int highFPS, Color lowFPSColor, Color highFPSColor, string fpsFormat, string trianglesText,
         string vertexText)
     {
-        _FPSArray = new float[Screen.width];
-        _graphMaterial = graphMaterial;
-        _gldepth = gldepth;
         _size[0] = xMargin; _size[1] = y; _size[2] = width; _size[3] = heigth;
         _lowFPS = lowFPS;
         _highFPS = highFPS;
@@ -49,28 +48,25 @@ public class PerformanceStats : PauseMenuStats {
         _FPSLabelFormat = fpsFormat;
         _trianglesText = trianglesText;
         _vertexText = vertexText;
-    }
 
-    override public void OnPostRender()
-    {
-        if (showFPSGraph && _graphMaterial != null)
+        if(_mainCamera == null)
         {
-            GL.PushMatrix(); // Save current matrix
-            GL.LoadPixelMatrix(); // Load matrix for pixel 2D representation
-            for (int i = 0; i < _graphMaterial.passCount; ++i) //for every pass required for this material
-            {
-                _graphMaterial.SetPass(i);
-                GL.Begin(GL.LINES);
-                for (int j = 0; j < _FPSArray.Length; ++j)
-                {
-                    GL.Vertex3(j, _FPSArray[j], _gldepth);
-                }
-                GL.End();
-            }
-            GL.PopMatrix(); //Recover the last saved matrix
-            ScrollFPS();
+            _mainCamera = GameObject.FindGameObjectWithTag(mainCameraTag);
+        }
+
+        if(_mainCamera != null)
+        {
+            _graphic = _mainCamera.AddComponent<FPSGraphic>();
+            _graphic.graphMaterial = graphMaterial;
+            _graphic.gldepth = gldepth;
+        }
+        else
+        {
+            Debug.LogError("No Main camera set.");
         }
     }
+
+    
 
     override public void LateUpdate()
     {
@@ -78,24 +74,17 @@ public class PerformanceStats : PauseMenuStats {
         {
             FPSUpdate();
         }
+
+        if (_graphic != null)
+        {
+            _graphic.showFPSGraph = showFPSGraph;
+            _graphic.FPS = _FPS;
+        }
     }
 
     override public void OnGUI()
     {
         ShowStatNums();
-    }
-
-    private void ScrollFPS()
-    {
-        for (int i = 1; i < _FPSArray.Length; ++i)
-        {
-            _FPSArray[i - 1] = _FPSArray[i];
-        }
-
-        if (_FPS < 1000)
-        {
-            _FPSArray[_FPSArray.Length - 1] = _FPS;
-        }
     }
 
     private void FPSUpdate()
@@ -105,6 +94,8 @@ public class PerformanceStats : PauseMenuStats {
         {
             _FPS = 1 / delta;
         }
+
+        
     }
 
     private void ShowStatNums()

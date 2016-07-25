@@ -86,7 +86,6 @@
     <Compile Include="Assets\Assets\Scripts\GUIElements\BallCounter.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\EnergyBar.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\GUIElement.cs" />
-    <Compile Include="Assets\Assets\Scripts\GUIElements\PauseMenu.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\PauseMenuStateMachine\PauseMenuStateManager.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\PauseMenuStateMachine\PrototypePauseMenu.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\PauseMenuStateMachine\States\PauseMenuCredits.cs" />
@@ -94,6 +93,7 @@
     <Compile Include="Assets\Assets\Scripts\GUIElements\PauseMenuStateMachine\States\PauseMenuOptions.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\PauseMenuStateMachine\States\PauseMenuState.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\PauseMenuStateMachine\States\PauseMenuStateNames.cs" />
+    <Compile Include="Assets\Assets\Scripts\GUIElements\PauseMenuStateMachine\States\PauseMenuStats\FPSGraphic.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\PauseMenuStateMachine\States\PauseMenuStats\PauseMenuStats.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\PauseMenuStateMachine\States\PauseMenuStats\PerformanceStats.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\PlayerPoints.cs" />

@@ -50,14 +50,14 @@ public class PauseMenuOptions : PauseMenuState {
         _stats = new PerformanceStats();
     }
 
-    public PauseMenuOptions(PauseMenuStateManager stateManager, Material graphMaterial, 
+    public PauseMenuOptions(PauseMenuStateManager stateManager, Material graphMaterial, string mainCameraTag,
         float gldepth, float statsXMargin, float statsy, float statsWidth, float statsHeigth,
         int lowFPS, int highFPS, Color lowFPSColor, Color highFPSColor, 
         string fpsFormat, string trianglesText, string vertexText,
         int width, int heigth, string[] toolbarString, string volumeLabel, string[] qualities,
         string[] qualityButtonsText, string[] statsText, string[] deviceText) : base(stateManager)
     {
-        _stats = new PerformanceStats(graphMaterial, gldepth, statsXMargin, statsy, statsWidth, statsHeigth,
+        _stats = new PerformanceStats(graphMaterial, mainCameraTag, gldepth, statsXMargin, statsy, statsWidth, statsHeigth,
             lowFPS, highFPS, lowFPSColor, highFPSColor, fpsFormat, trianglesText, vertexText);
 
         _size[0] = width;
