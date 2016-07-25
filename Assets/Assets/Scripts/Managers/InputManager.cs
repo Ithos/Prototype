@@ -14,6 +14,7 @@ public class InputManager : MonoBehaviour {
     public string lookLeftRightButton = "ROTATE_AROUND_Y";
     public string chargeButton = "CHARGE_LAUNCH";
     public string resetButton = "RESTART_LEVEL";
+    public string pauseButton = "PAUSE";
 
     // Use this for initialization
     void Start () {
@@ -41,6 +42,7 @@ public class InputManager : MonoBehaviour {
         }
 
         checkReset();
+        checkPause();
     }
 
     private bool checkHorizontal()
@@ -104,6 +106,14 @@ public class InputManager : MonoBehaviour {
         if(Input.GetButtonUp(resetButton))
         {
             gameManager.resetScene();
+        }
+    }
+
+    private void checkPause()
+    {
+        if(Input.GetButtonUp(pauseButton))
+        {
+            gameManager.Pause();
         }
     }
 

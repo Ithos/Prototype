@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour {
     public GameObject BallPrefab;
     public Transform BallSpawn;
 
+    public string gameMasterTag = "MASTER";
+    public GameMaster gameMaster = null;
+
     private GameObject[] _privateGameObjects;
 
     public float secondsToCharge = 2.0f;
@@ -50,12 +53,22 @@ public class GameManager : MonoBehaviour {
         _privateGameObjects = new GameObject[SpawnableObjects.Length + playerAmmo + 1];
         generateObjects();
         generatePlayerBall();
+
+        if(gameMaster == null)
+        {
+            gameMaster = GameObject.FindGameObjectWithTag(gameMasterTag).GetComponent<GameMaster>();
+        }
     }
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
+
+    public void Pause()
+    {
+        gameMaster.toPause();
+    }
 
     private void generateObjects()
     {
