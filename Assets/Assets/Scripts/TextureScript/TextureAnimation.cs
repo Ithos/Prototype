@@ -19,7 +19,10 @@ public class TextureAnimation : MonoBehaviour {
     private int _index = 0;                                             // Keeps track of the current frame
     private Vector2 _textureSize = Vector2.zero;                        // Keeps track of the texture scale
     private Material _materialInstance = null;                          // Reference to the material that we will create if necessary
-    private bool _isPlaying = false;                                    // A flag that indicates if the animation is palying                          
+    private bool _hasMaterialInstace = false;                           // A flag that keeps track of the presence of a material
+    private bool _isPlaying = false;                                    // A flag that indicates if the animation is palying
+    private Vector2 _globalOffset = new Vector2();                      // Vector that saves the offset state
+    private bool _init = true;                                          // Flag that indicates if its the first loop     
 
     public delegate void VoidEvent();                                   // The event delegate
     private List<VoidEvent> _voidEventCallbackList;                     // List of fuctions to call if events are online
@@ -58,6 +61,66 @@ public class TextureAnimation : MonoBehaviour {
         StartCoroutine(updateTilling());
     }
 
+    public void ChangeMaterial(Material newMaterial, bool newInstance = false)
+    {
+        Renderer renderer = GetComponent<Renderer>();
+        if (newInstance)
+        {
+            // If we already have a material instance, and we want to create a new one 
+            // we have to clean the previous one
+            Object.Destroy(renderer.sharedMaterial);
+
+            // Create new material
+            _materialInstance = new Material(newMaterial);
+
+            // Assign material to the renderer
+            renderer.sharedMaterial = _materialInstance;
+
+            // Set material flag
+            _hasMaterialInstace = true;
+        }
+        else
+        {
+            renderer.sharedMaterial = newMaterial;
+        }
+
+        CalcTextureSize();
+
+        // Assign texture size
+        renderer.sharedMaterial.SetTextureScale("_MainTex", _textureSize);
+
+    }
+
+    private void Awake()
+    {
+        // Allocate memory for events if needed
+        if (enableEvents)
+            _voidEventCallbackList = new List<VoidEvent>();
+
+        //Set The global offset to the initial offset
+        _globalOffset = offset;
+
+        // Create the material instance and/or recalculate texture size
+        ChangeMaterial(GetComponent<Renderer>().sharedMaterial, _hasMaterialInstace);
+    }
+
+    private void OnDestroy()
+    {
+        if(_hasMaterialInstace)
+        {
+            Object.Destroy(GetComponent<Renderer>().sharedMaterial);
+            _hasMaterialInstace = false;
+        }
+    }
+
+    private void OnEnable()
+    {
+        CalcTextureSize();
+
+        if (playOnEnable)
+            Play();
+    }
+
     // Use this for initialization
     void Start () {
 	
@@ -78,23 +141,23 @@ public class TextureAnimation : MonoBehaviour {
         while(true)
         {
             // If this is the last frame we stop or go back to the top
-            if(_index <= checkAgainst)
+            if (_index >= checkAgainst)
             {
                 // Reset the index
                 _index = 0;
 
                 // If we are only playing the animation one time
-                if(playOnce)
+                if (playOnce && !_init)
                 {
-                    if(checkAgainst == columns)
+                    if (checkAgainst == columns)
                     {
                         // Fire the event if needed
-                        if(enableEvents)
+                        if (enableEvents)
                         {
                             HandleCallbacks(_voidEventCallbackList);
                         }
 
-                        if(disableUponCompletion)
+                        if (disableUponCompletion)
                         {
                             GetComponent<Renderer>().enabled = false;
                         }
@@ -110,16 +173,18 @@ public class TextureAnimation : MonoBehaviour {
                         checkAgainst = columns;
                     }
                 }
-
-                // Apply the offset to move the frame 
-                ApplyOffset();
-
-                // Increment the index
-                ++_index;
-
-                yield return new WaitForSeconds(1f / framesPerSecond);
-
             }
+
+            // Apply the offset to move the frame 
+            ApplyOffset();
+
+            // Increment the index
+            ++_index;
+
+            // Set the init flag to false
+            _init = false;
+
+            yield return new WaitForSeconds(1f / framesPerSecond);
         }
     }
 
@@ -134,6 +199,36 @@ public class TextureAnimation : MonoBehaviour {
 
     private void ApplyOffset()
     {
+        Vector2 localoffset = new Vector2((float)_index/columns - (_index/columns), 
+                                        1 - (((_index/columns) / (float)rows )));
+
+        if (localoffset.y == 1.0f)
+            localoffset.y = 0.0f;
+
+        //If the texture has been sacaled reposition it to the center
+        localoffset.x += ((1.0f / columns) - _textureSize.x ) / 2.0f;
+        localoffset.y += ((1.0f / rows) - _textureSize.y) / 2.0f;
+
+        //Add offset to global offset
+        _globalOffset += localoffset;
+
+        // Update material
+        GetComponent<Renderer>().sharedMaterial.SetTextureOffset("_MainTex", _globalOffset);
+
+        Debug.Log("offset index:" + _index);
+    }
+
+    private void CalcTextureSize()
+    {
+        // Sets the tile size of the texture (in UV units), based in rows and columns
+        _textureSize = new Vector2(1.0f/columns, 1.0f/rows);
+
+        // factor in the scale
+        _textureSize.x /= scale.x;
+        _textureSize.y /= scale.y;
+
+        // Buffer part of the image
+        _textureSize -= buffer;
 
     }
 }
