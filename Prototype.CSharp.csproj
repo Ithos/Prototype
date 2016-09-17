@@ -83,6 +83,8 @@
     <Compile Include="Assets\Assets\Scripts\Collision\FragmentContainerCollision.cs" />
     <Compile Include="Assets\Assets\Scripts\Collision\MovingObjCollision.cs" />
     <Compile Include="Assets\Assets\Scripts\EditorGizmos\Gizmo.cs" />
+    <Compile Include="Assets\Assets\Scripts\GUIElements\3DMenu\ChangeSceneOnClick.cs" />
+    <Compile Include="Assets\Assets\Scripts\GUIElements\3DMenu\MouseOverHighlight.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\BallCounter.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\EnergyBar.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\GUIElement.cs" />
@@ -102,6 +104,11 @@
     <Compile Include="Assets\Assets\Scripts\Managers\InGameGUI.cs" />
     <Compile Include="Assets\Assets\Scripts\Managers\InputManager.cs" />
     <Compile Include="Assets\Assets\Scripts\Movement\PlayerMovement.cs" />
+    <Compile Include="Assets\Assets\Scripts\TextureScript\2DParticles\GrowingParticle.cs" />
+    <Compile Include="Assets\Assets\Scripts\TextureScript\2DParticles\Particle.cs" />
+    <Compile Include="Assets\Assets\Scripts\TextureScript\2DParticles\ParticleSource.cs" />
+    <Compile Include="Assets\Assets\Scripts\TextureScript\2DParticles\RadialParticleSource.cs" />
+    <Compile Include="Assets\Assets\Scripts\TextureScript\ModifyTexture.cs" />
     <Compile Include="Assets\Assets\Scripts\TextureScript\TextureAnimation.cs" />
     <Compile Include="Assets\Assets\Scripts\TextureScript\TextureMovement.cs" />
   </ItemGroup>

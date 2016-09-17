@@ -214,8 +214,6 @@ public class TextureAnimation : MonoBehaviour {
 
         // Update material
         GetComponent<Renderer>().sharedMaterial.SetTextureOffset("_MainTex", _globalOffset);
-
-        Debug.Log("offset index:" + _index);
     }
 
     private void CalcTextureSize()
