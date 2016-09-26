@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class PauseMenuState {
+public abstract class MenuState {
 
-    public float[] BackButtonMargins = { 20, 50, 50, 20};
+    public float[] BackButtonMargins = { 20, 50, 50, 20 };
 
     public string BackButtonText = "Back";
 
-    protected PauseMenuStateManager _stateManager = null;
+    protected MenuStateManager _stateManager = null;
 
-    public PauseMenuState(PauseMenuStateManager stateManager)
+    public MenuState(MenuStateManager stateManager)
     {
         _stateManager = stateManager;
     }

@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PauseMenuOptions : PauseMenuState {
+public class MainOptionsMenu : MenuState{
 
     private int[] _size = { 300, 300 };
     private int _toolbarInt = 0;
-    private string[] _toolbarString = { "Audio", "Graphics", "Stats", "System" };
+    private string[] _toolbarString = { "Audio", "Graphics", "System" };
     private string _volumeLabel = "Volume";
     private string[] _qualities =
     {
@@ -23,14 +23,6 @@ public class PauseMenuOptions : PauseMenuState {
         "Decrease"
     };
 
-    private string[] _statsText =
-    {
-        "FPS",
-        "Triangles",
-        "Vertex",
-        "FPS Graph"
-    };
-
     private string[] _deviceText =
     {
         "Unity player version ",
@@ -43,22 +35,20 @@ public class PauseMenuOptions : PauseMenuState {
         "Render Textures: "
     };
 
-    private PerformanceStats _stats = null;
+    private GameObject[] _activateObjects;
+    private GameObject[] _deactivateObjects;
 
-    public PauseMenuOptions(PauseMenuStateManager stateManager) : base(stateManager)
+    public MainOptionsMenu(MenuStateManager stateManager) : base(stateManager)
     {
-        _stats = new PerformanceStats();
     }
 
-    public PauseMenuOptions(PauseMenuStateManager stateManager, Material graphMaterial, string mainCameraTag,
+    public MainOptionsMenu(MenuStateManager stateManager, Material graphMaterial, string mainCameraTag,
         float gldepth, float statsXMargin, float statsy, float statsWidth, float statsHeigth,
-        int lowFPS, int highFPS, Color lowFPSColor, Color highFPSColor, 
+        int lowFPS, int highFPS, Color lowFPSColor, Color highFPSColor,
         string fpsFormat, string trianglesText, string vertexText,
         int width, int heigth, string[] toolbarString, string volumeLabel, string[] qualities,
-        string[] qualityButtonsText, string[] statsText, string[] deviceText) : base(stateManager)
+        string[] qualityButtonsText, string[] deviceText, GameObject[] objectsToActivate, GameObject[] objectToDeactivate) : base(stateManager)
     {
-        _stats = new PerformanceStats(graphMaterial, mainCameraTag, gldepth, statsXMargin, statsy, statsWidth, statsHeigth,
-            lowFPS, highFPS, lowFPSColor, highFPSColor, fpsFormat, trianglesText, vertexText);
 
         _size[0] = width;
         _size[1] = heigth;
@@ -67,11 +57,11 @@ public class PauseMenuOptions : PauseMenuState {
         _volumeLabel = volumeLabel;
         _qualities = qualities;
         _qualityButtonsText = qualityButtonsText;
-        _statsText = statsText;
         _deviceText = deviceText;
-    }
 
-
+        _activateObjects = objectsToActivate;
+        _deactivateObjects = objectToDeactivate;
+}
 
     override public void OnGUI()
     {
@@ -85,7 +75,7 @@ public class PauseMenuOptions : PauseMenuState {
 
         _toolbarInt = GUILayout.Toolbar(_toolbarInt, _toolbarString);
 
-        switch(_toolbarInt)
+        switch (_toolbarInt)
         {
             case 0:
                 VolumeControl();
@@ -95,24 +85,28 @@ public class PauseMenuOptions : PauseMenuState {
                 QualityControl();
                 break;
             case 2:
-                StatControl();
-                break;
-            case 3:
                 ShowDevice();
                 break;
         }
 
         EndPage();
 
-        if(ShowBackButton())
+        if (ShowBackButton())
         {
-            _stateManager.setState(PauseMenuStateNames.StateNames[0]);
+            for(int i = 0; i < _deactivateObjects.Length; ++i)
+            {
+                _deactivateObjects[i].SetActive(false);
+            }
+            for (int i = 0; i < _activateObjects.Length;++i)
+            {
+                _activateObjects[i].SetActive(true);
+            }
         }
     }
 
     private void VolumeControl()
     {
-        GUILayout.Label(_volumeLabel); 
+        GUILayout.Label(_volumeLabel);
         AudioListener.volume = GUILayout.HorizontalSlider(AudioListener.volume, 0, 1);
     }
 
@@ -157,24 +151,9 @@ public class PauseMenuOptions : PauseMenuState {
         GUILayout.EndHorizontal();
     }
 
-    private void StatControl()
-    {
-
-        _stateManager.setPauseStats(_stats);
-
-        GUILayout.BeginHorizontal();
-
-        _stats.showFPS = GUILayout.Toggle(_stats.showFPS, _statsText[0]);
-        _stats.showTris = GUILayout.Toggle(_stats.showTris, _statsText[1]);
-        _stats.showVerts = GUILayout.Toggle(_stats.showVerts, _statsText[2]);
-        _stats.showFPSGraph = GUILayout.Toggle(_stats.showFPSGraph, _statsText[3]);
-
-        GUILayout.EndHorizontal();
-    }
-
     private void ShowDevice()
     {
-        GUILayout.Label( _deviceText[0] + Application.unityVersion);
+        GUILayout.Label(_deviceText[0] + Application.unityVersion);
         GUILayout.Label(_deviceText[1] + SystemInfo.graphicsDeviceName + _deviceText[2] +
                 SystemInfo.graphicsMemorySize + _deviceText[3] +
                 SystemInfo.graphicsDeviceVersion + _deviceText[4] +

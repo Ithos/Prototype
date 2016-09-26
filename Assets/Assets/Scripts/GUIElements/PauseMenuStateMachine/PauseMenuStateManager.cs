@@ -1,19 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class PauseMenuStateManager : MonoBehaviour {
-
-    public GUISkin skin = null;
-    public Color menuColor = Color.yellow;
+public class PauseMenuStateManager : MenuStateManager {
 
     private float _lastTimeScale = 1.0f;
 
-    private PauseMenuState _currentState = null;
     private PauseMenuStats _currentStats = null;
 
-    private Dictionary<string, PauseMenuState> _stateMap = new Dictionary<string, PauseMenuState>();
-
-    void Start()
+    virtual protected void Start()
     {
         PauseGame();
     }
@@ -27,7 +21,7 @@ public class PauseMenuStateManager : MonoBehaviour {
         }
     }
 
-    void OnGUI()
+    override protected void OnGUI()
     {
         if (skin != null)
         {
@@ -75,21 +69,5 @@ public class PauseMenuStateManager : MonoBehaviour {
     public void setPauseStats(PauseMenuStats stats)
     {
         _currentStats = stats;
-    }
-
-    public void addState(string name, PauseMenuState state)
-    {
-        if(!_stateMap.ContainsKey(name))
-        {
-            _stateMap.Add(name, state);
-        }
-    }
-
-    public void setState(string name)
-    {
-        if(_stateMap.ContainsKey(name))
-        {
-            _currentState = _stateMap[name];
-        }
     }
 }

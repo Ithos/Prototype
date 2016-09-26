@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class ChangeSceneOnClick : MonoBehaviour {
 
@@ -17,9 +18,11 @@ public class ChangeSceneOnClick : MonoBehaviour {
 	
 	}
 
-    public void OnMouseUp()
+    public void OnMouseUpAsButton()
     {
-        foreach(GameObject go in toHideArray)
+        gameObject.SendMessage("OnMouseExit");
+
+        foreach (GameObject go in toHideArray)
         {
             go.SetActive(false);
         }
