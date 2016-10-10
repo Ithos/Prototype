@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour {
 
     private GameObject[] _privateGameObjects;
 
+    private Configuration _configuration;
+
     public float secondsToCharge = 2.0f;
 
     public int playerAmmo = 3;
@@ -40,6 +42,11 @@ public class GameManager : MonoBehaviour {
         get { return _charge; }
     }
 
+    public Configuration Config
+    {
+        get { return _configuration; }
+    }
+
     void OnValidate()
     {
         if(SpawnableObjects != null && SpawnPointsInOrder != null && (SpawnableObjects.Length != SpawnPointsInOrder.Length) )
@@ -58,6 +65,8 @@ public class GameManager : MonoBehaviour {
         {
             gameMaster = GameObject.FindGameObjectWithTag(gameMasterTag).GetComponent<GameMaster>();
         }
+
+        _configuration = Configuration.getConfiguration();
     }
 	
 	// Update is called once per frame

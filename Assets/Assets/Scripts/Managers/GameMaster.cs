@@ -8,7 +8,12 @@ public class GameMaster : MonoBehaviour {
 
     public string pauseSceneName = "Pause_Scene";
 
+    public string lastScene = "Scene_01";
+
     private PauseMenuStateManager _pauseMenu = null;
+
+    private Savefile _savefile = null;
+    private Configuration _config = null;
 
 	void Awake () {
         if (master == null)
@@ -46,5 +51,15 @@ public class GameMaster : MonoBehaviour {
     private void resetState()
     {
         _pauseMenu = null;
+    }
+
+    public void SaveLastScene()
+    {
+        /// TODO -- config file ?
+    }
+
+    public void LoadLastScene()
+    {
+        /// TODO -- config file ?
     }
 }
