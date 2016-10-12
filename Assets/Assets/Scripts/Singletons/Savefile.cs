@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 public class Savefile : ConfigIOBase
 {
@@ -8,14 +9,15 @@ public class Savefile : ConfigIOBase
     static private Savefile _instance = null;
 
     const string SAVEFILES_PATH = @"./savefiles/";
+    const string EXTENSION = ".svf";
 
-    private string _fileName = "savefile.svf";
+    private string _fileName = "savefile";
     private string _path = "";
 
     private Savefile()
     {
         _instance = this;
-        _path = SAVEFILES_PATH + _fileName;
+        _path = SAVEFILES_PATH + _fileName + EXTENSION;
         _configurationValues = null;
     }
 
@@ -68,7 +70,7 @@ public class Savefile : ConfigIOBase
     {
         unloadSavefile();
         _fileName = filename;
-        _path = SAVEFILES_PATH + _fileName;
+        _path = SAVEFILES_PATH + _fileName + EXTENSION;
     }
 	
     public void writeSavefile()
@@ -91,5 +93,28 @@ public class Savefile : ConfigIOBase
         }
 
         return _configurationValues;
+    }
+
+    static public bool checkSavefilesDir()
+    {
+        string[] dirs = Directory.GetFiles(SAVEFILES_PATH, "*" + EXTENSION);
+
+        if (dirs.Length > 0)
+            return true;
+
+        return false;
+    }
+
+    public void deleteSavefile()
+    {
+        if(_configurationValues != null)
+        {
+            Directory.Delete(_path);
+            _configurationValues = null;
+        }
+        else
+        {
+            Debug.LogError("No savefile loaded.");
+        }
     }
 }

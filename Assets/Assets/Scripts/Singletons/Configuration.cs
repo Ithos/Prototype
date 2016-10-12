@@ -74,12 +74,12 @@ public class Configuration: ConfigIOBase {
         return (T)Convert.ChangeType(getDefaultValue(name), typeof(T));
     }
 
-    override public void WriteConfigFile(string path, Dictionary<string, string> data)
+    override protected void WriteConfigFile(string path, Dictionary<string, string> data)
     {
         throw new Exception("Programatically writing configuration files it's not allowed");
     }
 
-    override public void CreateConfigFile(string path)
+    override protected void CreateConfigFile(string path)
     {
         throw new Exception("Programatically creating configuration files it's not allowed");
     }

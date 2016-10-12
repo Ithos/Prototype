@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -15,6 +17,7 @@ public class GameManager : MonoBehaviour {
     private GameObject[] _privateGameObjects;
 
     private Configuration _configuration;
+    private Savefile _savefile;
 
     public float secondsToCharge = 2.0f;
 
@@ -47,6 +50,11 @@ public class GameManager : MonoBehaviour {
         get { return _configuration; }
     }
 
+    public Savefile Svfile
+    {
+        get { return _savefile; }
+    }
+
     void OnValidate()
     {
         if(SpawnableObjects != null && SpawnPointsInOrder != null && (SpawnableObjects.Length != SpawnPointsInOrder.Length) )
@@ -66,13 +74,26 @@ public class GameManager : MonoBehaviour {
             gameMaster = GameObject.FindGameObjectWithTag(gameMasterTag).GetComponent<GameMaster>();
         }
 
-        _configuration = Configuration.getConfiguration();
+        if(gameMaster != null)
+        {
+            gameMaster.lastScene = EditorSceneManager.GetActiveScene().name;
+            _configuration = gameMaster.LoadedConfiguration;
+            _savefile = gameMaster.LoadedSavefile;
+        }
     }
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
+
+    void OnDestroy()
+    {
+        if(gameMaster != null)
+        {
+            gameMaster.SaveLastScene();
+        }
+    }
 
     public void Pause()
     {

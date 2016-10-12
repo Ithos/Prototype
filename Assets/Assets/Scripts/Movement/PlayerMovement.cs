@@ -117,7 +117,7 @@ public class PlayerMovement : MonoBehaviour {
         projection.Normalize();
 
         float dotResult = Vector3.Dot(projection, Vector3.right);
-        Debug.Log("Y angle:" + dotResult );
+        //Debug.Log("Y angle:" + dotResult );
         return dotResult;
         
     }
