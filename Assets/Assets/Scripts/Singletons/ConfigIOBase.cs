@@ -61,6 +61,9 @@ public abstract class ConfigIOBase
                 writer.WriteLine(current.Key + "=" + current.Value);
             }
 
+            writer.Flush();
+            writer.Close();
+
         }
         catch(Exception e)
         {

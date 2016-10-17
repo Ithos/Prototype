@@ -87,6 +87,7 @@
     <Compile Include="Assets\Assets\Scripts\GUIElements\3DMenu\ChangeSceneOnClick.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\3DMenu\MouseOverHighlight.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\3DMenu\OnClickLoadLastKnownScene.cs" />
+    <Compile Include="Assets\Assets\Scripts\GUIElements\3DMenu\QuitOnClick.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\BallCounter.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\EnergyBar.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\GUIElement.cs" />

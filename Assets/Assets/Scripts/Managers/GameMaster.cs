@@ -9,12 +9,13 @@ public class GameMaster : MonoBehaviour {
 
     public string pauseSceneName = "Pause_Scene";
 
-    public string lastScene = "Scene_01";
+    public string defaultlastScene = "Scene_01";
 
     private PauseMenuStateManager _pauseMenu = null;
 
     private Savefile _savefile = null;
     private Configuration _config = null;
+    private string _scene = string.Empty;
 
     public Savefile LoadedSavefile
     {
@@ -26,6 +27,12 @@ public class GameMaster : MonoBehaviour {
         get { return _config; }
     }
 
+    public string LastScene
+    {
+        get { return _scene; }
+        set { _scene = value; }
+    }
+
 	void Awake () {
         if (master == null)
         {
@@ -33,6 +40,7 @@ public class GameMaster : MonoBehaviour {
             master = this;
             _savefile = Savefile.getInstance();
             _config = Configuration.getConfiguration();
+            _scene = defaultlastScene;
 
             if (Savefile.checkSavefilesDir())
             {
@@ -40,7 +48,7 @@ public class GameMaster : MonoBehaviour {
                 Dictionary<string, string> data = _savefile.getSavedData();
                 if(data.ContainsKey(ConfigurationConstants.SAVEFILE_LAST_LEVEL))
                 {
-                    lastScene = data[ConfigurationConstants.SAVEFILE_LAST_LEVEL];
+                    _scene = data[ConfigurationConstants.SAVEFILE_LAST_LEVEL];
                 }
             }
             
@@ -79,8 +87,14 @@ public class GameMaster : MonoBehaviour {
 
     public void SaveLastScene()
     {
-        _savefile.addData(ConfigurationConstants.SAVEFILE_LAST_LEVEL, lastScene);
+        _savefile.addData(ConfigurationConstants.SAVEFILE_LAST_LEVEL, _scene);
         _savefile.writeSavefile();
+    }
+
+    public void Quit()
+    {
+        /// TODO -- free resources -- ///
+        Application.Quit();
     }
 
 }

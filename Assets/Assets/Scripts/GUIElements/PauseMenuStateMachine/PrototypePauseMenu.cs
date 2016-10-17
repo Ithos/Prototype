@@ -7,7 +7,8 @@ public class PrototypePauseMenu : PauseMenuStateManager {
     public string mainCameraTag = "MainCamera";
 
     public int[] MainPageSize = { 200, 200 };
-    public string[] MainPageButtonTexts = { "Continue", "Options", "Credits", "Reset"};
+    public string[] MainPageButtonTexts = { "Continue", "Options", "Credits", "Reset", "Main Menu"};
+    public string MainMenuSceneName = "MainMenu_Scene";
 
     public int[] OptionsPageSize = { 300, 300 };
     public string[] toolbarString = { "Audio", "Graphics", "Stats", "System" };
@@ -68,8 +69,8 @@ public class PrototypePauseMenu : PauseMenuStateManager {
     void Awake()
     {
         addState(PauseMenuStateNames.StateNames[0], 
-            new PauseMenuMain(this, gameManagerTag,
-            MainPageButtonTexts[0], MainPageButtonTexts[1], MainPageButtonTexts[2], MainPageButtonTexts[3],
+            new PauseMenuMain(this, gameManagerTag, MainMenuSceneName,
+            MainPageButtonTexts[0], MainPageButtonTexts[1], MainPageButtonTexts[2], MainPageButtonTexts[3], MainPageButtonTexts[4],
             MainPageSize[0], MainPageSize[1]) );
 
         addState(PauseMenuStateNames.StateNames[1],

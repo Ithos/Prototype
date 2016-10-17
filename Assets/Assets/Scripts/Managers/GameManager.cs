@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour {
 
         if(gameMaster != null)
         {
-            gameMaster.lastScene = EditorSceneManager.GetActiveScene().name;
+            gameMaster.LastScene = EditorSceneManager.GetActiveScene().name;
             _configuration = gameMaster.LoadedConfiguration;
             _savefile = gameMaster.LoadedSavefile;
         }
