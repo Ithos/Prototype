@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour {
     public float minYAngleCos = -0.5f;
 
     public Rigidbody activeBall;
+    public SlowMovement activeControlledBall;
     public string playerBallTag;
     public float forceConstant = 1.0f;
     public float ballSpawnDelay = 0.3f;
@@ -140,6 +141,14 @@ public class PlayerMovement : MonoBehaviour {
             activeBall = null;
             gameManager.emptyCharge();
         }
+        else if(activeControlledBall != null)
+        {
+            activeControlledBall.GetComponent<Transform>().parent = null;
+            activeControlledBall.AddForce(-_myTransform.forward * (gameManager.CurrentCharge / gameManager.secondsToCharge) * forceConstant, ForceMode.Impulse);
+            activeControlledBall.UseGravity = true;
+            activeControlledBall = null;
+            gameManager.emptyCharge();
+        }
     }
 
     public bool chargeBall()
@@ -149,7 +158,7 @@ public class PlayerMovement : MonoBehaviour {
         if (gameManager.CurrentCharge >= gameManager.secondsToCharge)
             return false;
 
-        if(activeBall != null)
+        if(activeBall != null || activeControlledBall != null)
         {
             gameManager.addCharge(Time.deltaTime);
             return true;
@@ -158,14 +167,15 @@ public class PlayerMovement : MonoBehaviour {
         return false;
     }
 
-    public void setActiveBall(Rigidbody ball)
+    public void setActiveBall(GameObject ball)
     {
-        activeBall = ball;
+        activeBall = ball.GetComponent<Rigidbody>();
+        activeControlledBall = ball.GetComponent<SlowMovement>();
     }
 
     private void checkBallRespawn()
     {
-        if (activeBall != null)
+        if (activeBall != null || activeControlledBall != null)
             return;
 
         if(_delayTime < ballSpawnDelay)
@@ -175,7 +185,13 @@ public class PlayerMovement : MonoBehaviour {
         else
         {
             _delayTime = 0;
-            activeBall = gameManager.generatePlayerBall();
+            GameObject tmp = gameManager.generatePlayerBall();
+            if (tmp != null)
+            {
+                activeBall = tmp.GetComponent<Rigidbody>();
+                activeControlledBall = tmp.GetComponent<SlowMovement>();
+                gameManager.swapTargetBall(tmp);
+            }
         }
     }
 
@@ -183,9 +199,11 @@ public class PlayerMovement : MonoBehaviour {
     {
         if(!_init)
         {
-            if (activeBall == null)
+            if (activeBall == null && activeControlledBall == null)
             {
-                activeBall = GameObject.FindGameObjectWithTag(playerBallTag).GetComponent<Rigidbody>();
+                GameObject tmp = GameObject.FindGameObjectWithTag(playerBallTag);
+                activeBall = tmp.GetComponent<Rigidbody>();
+                activeControlledBall = tmp.GetComponent<SlowMovement>();
             }
 
             _init = true;

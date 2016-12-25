@@ -89,6 +89,7 @@
     <Compile Include="Assets\Assets\Scripts\GUIElements\3DMenu\OnClickLoadLastKnownScene.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\3DMenu\QuitOnClick.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\BallCounter.cs" />
+    <Compile Include="Assets\Assets\Scripts\GUIElements\BallStats.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\EnergyBar.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\GUIElement.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\PauseMenuStateMachine\MenuStateManager.cs" />
@@ -106,11 +107,13 @@
     <Compile Include="Assets\Assets\Scripts\GUIElements\PauseMenuStateMachine\States\PauseMenuStates\PauseMenuStats\PauseMenuStats.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\PauseMenuStateMachine\States\PauseMenuStates\PauseMenuStats\PerformanceStats.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\PlayerPoints.cs" />
+    <Compile Include="Assets\Assets\Scripts\Managers\ActiveElementsManager.cs" />
     <Compile Include="Assets\Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Assets\Scripts\Managers\GameMaster.cs" />
     <Compile Include="Assets\Assets\Scripts\Managers\InGameGUI.cs" />
     <Compile Include="Assets\Assets\Scripts\Managers\InputManager.cs" />
     <Compile Include="Assets\Assets\Scripts\Movement\PlayerMovement.cs" />
+    <Compile Include="Assets\Assets\Scripts\Movement\SlowMovement.cs" />
     <Compile Include="Assets\Assets\Scripts\Singletons\ConfigIOBase.cs" />
     <Compile Include="Assets\Assets\Scripts\Singletons\Configuration.cs" />
     <Compile Include="Assets\Assets\Scripts\Singletons\Savefile.cs" />

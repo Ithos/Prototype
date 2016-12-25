@@ -13,6 +13,10 @@ public class GameManager : MonoBehaviour {
 
     public string gameMasterTag = "MASTER";
     public GameMaster gameMaster = null;
+    public string activeElementsManagerTag = "ELEMENTS_MANAGER";
+    public ActiveElementsManager elementsManager = null;
+
+    public string ballName = "PlayerBall";
 
     private GameObject[] _privateGameObjects;
 
@@ -38,6 +42,11 @@ public class GameManager : MonoBehaviour {
     public int BallsLeft
     {
         get { return playerAmmo - _playerAmmo + 1; }
+    }
+
+    public int ActiveBalls
+    {
+        get { return _playerAmmo; }
     }
 
     public float CurrentCharge
@@ -72,6 +81,11 @@ public class GameManager : MonoBehaviour {
         if(gameMaster == null)
         {
             gameMaster = GameObject.FindGameObjectWithTag(gameMasterTag).GetComponent<GameMaster>();
+        }
+
+        if(elementsManager == null)
+        {
+            elementsManager = GameObject.FindGameObjectWithTag(activeElementsManagerTag).GetComponent<ActiveElementsManager>();
         }
 
         if(gameMaster != null)
@@ -118,7 +132,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public Rigidbody generatePlayerBall()
+    public GameObject generatePlayerBall()
     {
         if(_playerAmmo < playerAmmo)
         {
@@ -131,12 +145,42 @@ public class GameManager : MonoBehaviour {
 
             ++_playerAmmo;
 
-            return _privateGameObjects[SpawnableObjects.Length + _playerAmmo - 1].GetComponent<Rigidbody>();
+            GameObject ball = _privateGameObjects[SpawnableObjects.Length + _playerAmmo - 1];
+
+            ball.name = ballName + _playerAmmo.ToString();
+
+            return ball;
         }
 
         ++_playerAmmo;
 
         return null;
+    }
+
+    public GameObject getPlayerBall(int index)
+    {
+        if (_privateGameObjects.Length < SpawnableObjects.Length + index || index > playerAmmo)
+        {
+            Debug.LogError("GameManager >>> Wrong player ball index.");
+            return null;
+        }
+
+        return _privateGameObjects[SpawnableObjects.Length + index];
+    }
+
+    private int findBallIndex(GameObject ball)
+    {
+        int index = -1;
+
+        for(int i = SpawnableObjects.Length; i < _privateGameObjects.Length; ++i)
+        {
+            if(_privateGameObjects[i] == ball)
+            {
+                index = i - SpawnableObjects.Length;
+            }
+        }
+
+        return index;
     }
 
     public void addCharge(float charge)
@@ -170,5 +214,34 @@ public class GameManager : MonoBehaviour {
         deleteAllObjects();
         generateObjects();
         resetParameters();
+    }
+
+    public void swapTargetBall(GameObject newActiveBall)
+    {
+        elementsManager.setActiveBall(newActiveBall, findBallIndex(newActiveBall));
+    }
+
+    public void swapTargetBall()
+    {
+        elementsManager.setActiveBall();
+    }
+
+    public void decreaseActiveTime()
+    {
+        elementsManager.decreaseActiveTime();
+    }
+
+    public void increaseActiveTime()
+    {
+        elementsManager.increaseActiveTime();
+    }
+
+    public GameObject getActiveBall()
+    {
+        SlowMovement ret = elementsManager.getActiveBall();
+        if (ret == null)
+            return null;
+
+        return ret.gameObject;
     }
 }

@@ -13,8 +13,11 @@ public class InputManager : MonoBehaviour {
     public string lookUpDownButton = "ROTATE_AROUND_X";
     public string lookLeftRightButton = "ROTATE_AROUND_Y";
     public string chargeButton = "CHARGE_LAUNCH";
-    public string resetButton = "RESTART_LEVEL";
+    //public string resetButton = "RESTART_LEVEL";
     public string pauseButton = "PAUSE";
+    public string swapTargetButton = "SWAP_TARGET";
+    public string decreaseTimeButton = "DECREASE_TIME";
+    public string increaseTimeButton = "INCREASE_TIME";
 
     // Use this for initialization
     void Start () {
@@ -41,8 +44,10 @@ public class InputManager : MonoBehaviour {
             checkLaunchBall();
         }
 
-        checkReset();
+        //checkReset();
         checkPause();
+        checkTargetSwap();
+        checkBallTimeUpdate();
     }
 
     private bool checkHorizontal()
@@ -95,19 +100,39 @@ public class InputManager : MonoBehaviour {
         return false;
     }
 
+    private void checkTargetSwap()
+    {
+        if(Input.GetButtonUp(swapTargetButton))
+        {
+            gameManager.swapTargetBall();
+        }
+    }
+
+    private void checkBallTimeUpdate()
+    {
+        if(Input.GetButtonUp(increaseTimeButton))
+        {
+            gameManager.increaseActiveTime();
+        }
+        else if (Input.GetButtonUp(decreaseTimeButton))
+        {
+            gameManager.decreaseActiveTime();
+        }
+    }
+
     private void checkLaunchBall()
     {
         if (Input.GetButtonUp(chargeButton))
             playerMovement.launchBall();
     }
 
-    private void checkReset()
-    {
-        if(Input.GetButtonUp(resetButton))
-        {
-            gameManager.resetScene();
-        }
-    }
+    //private void checkReset()
+    //{
+    //    if(Input.GetButtonUp(resetButton))
+    //    {
+    //        gameManager.resetScene();
+    //    }
+    //}
 
     private void checkPause()
     {
