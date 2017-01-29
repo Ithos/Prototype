@@ -69,12 +69,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Prototype.CSharp.Plugins.csproj">
-      <Project>{A6BC1859-15DE-74BC-81F2-7DEC548DE22E}</Project>
-      <Name>Prototype.CSharp.Plugins</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Assets\Assets\Scripts\AI\HorizontalMovement.cs" />
     <Compile Include="Assets\Assets\Scripts\AI\MixedMovement.cs" />
     <Compile Include="Assets\Assets\Scripts\AI\Movement.cs" />
@@ -107,11 +101,13 @@
     <Compile Include="Assets\Assets\Scripts\GUIElements\PauseMenuStateMachine\States\PauseMenuStates\PauseMenuStats\PauseMenuStats.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\PauseMenuStateMachine\States\PauseMenuStates\PauseMenuStats\PerformanceStats.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\PlayerPoints.cs" />
+    <Compile Include="Assets\Assets\Scripts\GUIElements\TutorialTextures.cs" />
     <Compile Include="Assets\Assets\Scripts\Managers\ActiveElementsManager.cs" />
     <Compile Include="Assets\Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Assets\Scripts\Managers\GameMaster.cs" />
     <Compile Include="Assets\Assets\Scripts\Managers\InGameGUI.cs" />
     <Compile Include="Assets\Assets\Scripts\Managers\InputManager.cs" />
+    <Compile Include="Assets\Assets\Scripts\Managers\TutorialManager.cs" />
     <Compile Include="Assets\Assets\Scripts\Movement\PlayerMovement.cs" />
     <Compile Include="Assets\Assets\Scripts\Movement\SlowMovement.cs" />
     <Compile Include="Assets\Assets\Scripts\Singletons\ConfigIOBase.cs" />
@@ -124,13 +120,6 @@
     <Compile Include="Assets\Assets\Scripts\TextureScript\ModifyTexture.cs" />
     <Compile Include="Assets\Assets\Scripts\TextureScript\TextureAnimation.cs" />
     <Compile Include="Assets\Assets\Scripts\TextureScript\TextureMovement.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
-    <None Include="Assets\Standard Assets\ParticleSystems\ParticleSystemsGuidelines.txt" />
-    <None Include="Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAdd.shader" />
-    <None Include="Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAddSoft.shader" />
-    <None Include="Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAlpha.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

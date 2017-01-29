@@ -34,4 +34,9 @@ public class FragmentCollision : MonoBehaviour {
             _active = false;
         }
     }
+
+    public bool isActive()
+    {
+        return _active;
+    }
 }

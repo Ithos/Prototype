@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour {
     public float secondsToCharge = 2.0f;
 
     public int playerAmmo = 3;
+    public bool infiniteAmmo = false;
 
     private int _score = 0;
     private float _time = 0;
@@ -134,7 +135,7 @@ public class GameManager : MonoBehaviour {
 
     public GameObject generatePlayerBall()
     {
-        if(_playerAmmo < playerAmmo)
+        if(_playerAmmo < playerAmmo || infiniteAmmo)
         {
             
             _privateGameObjects[SpawnableObjects.Length + _playerAmmo] =
@@ -148,6 +149,11 @@ public class GameManager : MonoBehaviour {
             GameObject ball = _privateGameObjects[SpawnableObjects.Length + _playerAmmo - 1];
 
             ball.name = ballName + _playerAmmo.ToString();
+
+            if (infiniteAmmo && _playerAmmo > playerAmmo)
+            {
+                _playerAmmo = 1;
+            }
 
             return ball;
         }
