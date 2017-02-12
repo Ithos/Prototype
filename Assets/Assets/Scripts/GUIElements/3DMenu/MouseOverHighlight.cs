@@ -4,6 +4,7 @@ using System.Collections;
 public class MouseOverHighlight : MonoBehaviour {
 
     public Color highlightColor;
+    public bool Enabled = true;
     public GameObject[] objectParts;
 
     private Color[] _defaulColors;
@@ -23,12 +24,14 @@ public class MouseOverHighlight : MonoBehaviour {
 
     public void OnMouseEnter()
     {
-        Highlight(true);
+        if(Enabled)
+            Highlight(true);
     }
 
     public void OnMouseExit()
     {
-        Highlight(false);
+        if(Enabled)
+            Highlight(false);
     }
 
     private void Highlight(bool glow)

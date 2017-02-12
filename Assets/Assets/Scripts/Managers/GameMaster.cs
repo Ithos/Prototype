@@ -11,6 +11,19 @@ public class GameMaster : MonoBehaviour {
 
     public string defaultlastScene = "Scene_01";
 
+    private int _lastLevelActive = 0;
+    public int LastLevelActive
+    {
+        get { return _lastLevelActive; }
+        set
+        {
+            if(_lastLevelActive < value)
+            {
+                _lastLevelActive = value;
+            }
+        }
+    }
+
     private PauseMenuStateManager _pauseMenu = null;
 
     private Savefile _savefile = null;

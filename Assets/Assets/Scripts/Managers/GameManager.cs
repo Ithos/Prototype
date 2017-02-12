@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour {
 
     public string ballName = "PlayerBall";
 
+    public int SceneIdNumber = 0;
+    public int MinimumPoints = 300;
+
     private GameObject[] _privateGameObjects;
 
     private Configuration _configuration;
@@ -135,7 +138,9 @@ public class GameManager : MonoBehaviour {
 
     public GameObject generatePlayerBall()
     {
-        if(_playerAmmo < playerAmmo || infiniteAmmo)
+        checkPoints();
+
+        if (_playerAmmo < playerAmmo || infiniteAmmo)
         {
             
             _privateGameObjects[SpawnableObjects.Length + _playerAmmo] =
@@ -249,5 +254,23 @@ public class GameManager : MonoBehaviour {
             return null;
 
         return ret.gameObject;
+    }
+
+    public void SetCompleteMap()
+    {
+        gameMaster.LastLevelActive = SceneIdNumber;
+    }
+
+    public bool IsCompleteMap()
+    {
+        return Score >= MinimumPoints;
+    }
+
+    private void checkPoints()
+    {
+        if(IsCompleteMap())
+        {
+            SetCompleteMap();
+        }
     }
 }

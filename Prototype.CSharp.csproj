@@ -81,6 +81,7 @@
     <Compile Include="Assets\Assets\Scripts\GUIElements\3DMenu\ChangeSceneOnClick.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\3DMenu\MouseOverHighlight.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\3DMenu\OnClickLoadLastKnownScene.cs" />
+    <Compile Include="Assets\Assets\Scripts\GUIElements\3DMenu\OnClickLoadScene.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\3DMenu\QuitOnClick.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\BallCounter.cs" />
     <Compile Include="Assets\Assets\Scripts\GUIElements\BallStats.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Assets\Assets\Scripts\Managers\GameMaster.cs" />
     <Compile Include="Assets\Assets\Scripts\Managers\InGameGUI.cs" />
     <Compile Include="Assets\Assets\Scripts\Managers\InputManager.cs" />
+    <Compile Include="Assets\Assets\Scripts\Managers\LevelActivationManager.cs" />
     <Compile Include="Assets\Assets\Scripts\Managers\TutorialManager.cs" />
     <Compile Include="Assets\Assets\Scripts\Movement\PlayerMovement.cs" />
     <Compile Include="Assets\Assets\Scripts\Movement\SlowMovement.cs" />

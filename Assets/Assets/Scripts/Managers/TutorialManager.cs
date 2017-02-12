@@ -268,6 +268,7 @@ public class TutorialManager : MonoBehaviour {
 
     private void exitTutorial()
     {
+        _gameManager.SetCompleteMap();
         if (_gameManager != null)
             _gameManager.resetScene();
 
